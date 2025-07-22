@@ -1,0 +1,19 @@
+{
+  "name": "axora",
+  "compatibility_date": "2025-07-16",
+  "assets": {
+    "directory": "dist",
+    "not_found_handling": "single-page-application"
+  },
+  "routes": [
+    {
+      "pattern": "axora.garcade.in",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.axora.garcade.in",
+      "custom_domain": true
+    }
+  ]
+}
+  

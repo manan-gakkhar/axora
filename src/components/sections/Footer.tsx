@@ -4,6 +4,16 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { 
+  FaDiscord, 
+  FaTelegram, 
+  FaInstagram, 
+  FaLinkedin,
+  FaWhatsapp,
+  FaLink
+} from 'react-icons/fa';
+import type { ReactNode } from 'react';
+import { socialLinks } from '@/lib/utils';
 
 const footerLinks = {
   company: [
@@ -19,10 +29,10 @@ const footerLinks = {
     { name: 'Workshops', href: '#' }
   ],
   community: [
-    { name: 'Discord', href: 'https://discord.gg/TqAnQCWJ' },
-    { name: 'Telegram', href: 'https://t.me/+Ouh8sRHtoX05OThl' },
-    { name: 'Twitter', href: '#' },
-    { name: 'Instagram', href: '#' }
+    { name: 'Discord', href: socialLinks.discord.url, icon: <FaDiscord /> },
+    { name: 'Telegram', href: socialLinks.telegram.url, icon: <FaTelegram /> },
+    { name: 'WhatsApp', href: socialLinks.whatsapp.url, icon: <FaWhatsapp /> },
+    { name: 'Instagram', href: socialLinks.instagram.url, icon: <FaInstagram /> }
   ],
   support: [
     { name: 'Help Center', href: '#' },
@@ -32,12 +42,50 @@ const footerLinks = {
   ]
 };
 
-const socialLinks = [
-  { name: 'Discord', icon: '🎮', href: 'https://discord.gg/TqAnQCWJ' },
-  { name: 'Telegram', icon: '📱', href: 'https://t.me/+Ouh8sRHtoX05OThl' },
-  { name: 'Twitter', icon: '🐦', href: '#' },
-  { name: 'Instagram', icon: '📸', href: '#' },
-  { name: 'LinkedIn', icon: '💼', href: '#' }
+interface SocialLinkItem {
+  name: string;
+  icon: ReactNode;
+  href: string;
+  color: string;
+}
+
+const footerSocialLinks: SocialLinkItem[] = [
+  { 
+    name: 'Discord', 
+    icon: <FaDiscord className="w-5 h-5" />, 
+    href: socialLinks.discord.url,
+    color: socialLinks.discord.textColor
+  },
+  { 
+    name: 'Telegram', 
+    icon: <FaTelegram className="w-5 h-5" />, 
+    href: socialLinks.telegram.url,
+    color: socialLinks.telegram.textColor
+  },
+  { 
+    name: 'WhatsApp', 
+    icon: <FaWhatsapp className="w-5 h-5" />, 
+    href: socialLinks.whatsapp.url,
+    color: socialLinks.whatsapp.textColor
+  },
+  { 
+    name: 'Instagram', 
+    icon: <FaInstagram className="w-5 h-5" />, 
+    href: socialLinks.instagram.url,
+    color: socialLinks.instagram.textColor
+  },
+  { 
+    name: 'LinkedIn', 
+    icon: <FaLinkedin className="w-5 h-5" />, 
+    href: socialLinks.linkedin.url,
+    color: socialLinks.linkedin.textColor
+  },
+  { 
+    name: 'Linktree', 
+    icon: <FaLink className="w-5 h-5" />, 
+    href: socialLinks.linktree.url,
+    color: socialLinks.linktree.textColor
+  }
 ];
 
 export default function Footer() {
@@ -71,24 +119,24 @@ export default function Footer() {
                   innovation and foster meaningful connections.
                 </p>
                 <Badge variant="orange" className="mb-4">
-                  🚀 Coming Soon
+                  Coming Soon
                 </Badge>
               </div>
 
               {/* Social Links */}
-              <div className="flex space-x-4">
-                {socialLinks.map((social, index) => (
+              <div className="flex flex-wrap gap-3">
+                {footerSocialLinks.map((social, index) => (
                   <motion.a
                     key={social.name}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-gray-900/50 border border-orange-500/20 rounded-lg flex items-center justify-center text-xl hover:bg-orange-500/20 hover:border-orange-500/40 transition-all duration-300"
+                    className={`w-10 h-10 bg-gray-900/50 border border-gray-800 rounded-lg flex items-center justify-center ${social.color} transition-all duration-300 hover:scale-110 hover:bg-gray-800`}
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
+                    transition={{ duration: 0.3, delay: 0.1 * index }}
                     viewport={{ once: true }}
-                    whileHover={{ scale: 1.1 }}
+                    aria-label={social.name}
                   >
                     {social.icon}
                   </motion.a>
@@ -173,8 +221,9 @@ export default function Footer() {
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-orange-400 transition-colors duration-300"
+                      className="text-gray-400 hover:text-orange-400 transition-colors duration-300 flex items-center gap-2"
                     >
+                      <span className="text-sm">{link.icon}</span>
                       {link.name}
                     </a>
                   </motion.li>
@@ -228,13 +277,13 @@ export default function Footer() {
             </motion.p>
             
             <motion.div 
-              className="flex space-x-6"
+              className="flex flex-wrap gap-4 justify-center"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              {footerLinks.support.map((link, index) => (
+              {footerLinks.support.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
